@@ -1,56 +1,114 @@
 @import "tailwindcss";
 
 @theme {
+  /* Paleta de colores extraída (Restaurada) */
   --color-cream: #FDFBF7;
   --color-coffee: #3E2723;
-  --color-mocha: #6D4C41;
+  --color-mocha: #8D6E63;
   --color-terracotta: #D7CCC8;
+
+  /* Fuentes (Restauradas) */
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-serif: "Playfair Display", serif;
 }
 
-/* Estilos Base */
-html {
-  scroll-behavior: smooth; /* Esto hace que al dar clic en botones, baje suave */
+/* Mantenemos las variables CSS nativas en :root */
+:root {
+  --cream: #FDFBF7;
+  --coffee: #3E2723;
+  --mocha: #8D6E63;
+  --terracotta: #D7CCC8;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--color-cream);
+@layer base {
+  html {
+     scroll-behavior: smooth; /* Agregamos esto para suavidad */
+  }
+  body {
+    @apply bg-cream text-coffee font-sans overflow-x-hidden selection:bg-terracotta selection:text-coffee;
+  }
+  h1, h2, .serif {
+    @apply font-serif italic;
+  }
 }
 
-/* CAMBIO IMPORTANTE AQUÍ:
-   1. Quitamos 'scroll-snap-align: start' (El imán).
-   2. Cambiamos 'height: 100vh' por 'min-height: 100vh'.
-      Esto permite que si una sección es más larga (como el chat en móvil), 
-      puedas bajar tranquilamente sin que te corte.
+/* Clases de utilidad personalizadas */
+.glass {
+  @apply backdrop-blur-xl bg-white/40 border border-white/30 shadow-2xl;
+}
+
+/* AQUÍ ESTÁ EL ARREGLO PARA EL SCROLL FLUIDO:
+   1. Quitamos scroll-snap-type y overflow-y: scroll.
+   2. Dejamos que el body maneje el scroll natural.
+*/
+.scrolly-container {
+  /* scroll-snap-type: y mandatory;  <-- ELIMINADO EL IMÁN */
+  /* height: 100vh;                  <-- ELIMINADO EL LIMITE DE ALTURA */
+  /* overflow-y: scroll;             <-- ELIMINADO EL SCROLL FORZADO */
+  width: 100%;
+  position: relative;
+}
+
+/* SECCIONES:
+   1. Cambiamos height: 100vh por min-height: 100vh.
+   2. Quitamos el scroll-snap-align.
 */
 .scrolly-section {
-  width: 100%;
-  min-height: 100vh; /* Ocupa AL MENOS toda la pantalla, pero puede crecer */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  /* scroll-snap-align: start;  <-- ESTA LÍNEA ERA LA CULPABLE, LA BORRAMOS */
+  /* scroll-snap-align: start;       <-- ELIMINADO EL IMÁN */
+  /* scroll-snap-stop: always;       <-- ELIMINADO */
+  min-height: 100vh;              /* <-- AHORA ES ALTURA MÍNIMA (Flexible) */
+  @apply relative flex items-center justify-center overflow-hidden;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
-/* Tipografías */
-.font-serif {
-  font-family: 'Playfair Display', serif;
+.map-grid {
+  background-image: radial-gradient(var(--terracotta) 1px, transparent 1px);
+  background-size: 30px 30px;
 }
 
-.font-script {
-  font-family: 'Dancing Script', cursive;
+/* Animaciones (Restauradas para que el teléfono se mueva) */
+.typing-bubble {
+  animation: fadeInScale 0.5s ease-out forwards;
+  opacity: 0;
 }
 
-.font-sans {
-  font-family: 'Montserrat', sans-serif;
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.9) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* Animaciones de Texto (Opcionales, se ven bonitas) */
-.text-gradient {
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(45deg, var(--color-coffee), var(--color-mocha));
+.waveform-bar {
+  @apply w-1 bg-mocha rounded-full;
+  height: 10px;
+}
+
+.vinyl-rotate {
+  animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Scrollbar Styles (Restaurados) */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+::-webkit-scrollbar-thumb { 
+  background: var(--mocha);
+  border-radius: 10px;
+}
+
+/* Utilidad para ocultar scrollbar en carrusel */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
