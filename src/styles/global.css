@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@theme {
+  /* Paleta de colores extraída */
+  --color-cream: #FDFBF7;
+  --color-coffee: #3E2723;
+  --color-mocha: #8D6E63;
+  --color-terracotta: #D7CCC8;
+
+  /* Fuentes */
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-serif: "Playfair Display", serif;
+}
+
+/* Mantenemos las variables CSS nativas en :root para asegurar que 
+   las clases arbitrarias originales (ej: bg-[var(--cream)]) sigan funcionando 
+   sin alterar el HTML original.
+*/
+:root {
+  --cream: #FDFBF7;
+  --coffee: #3E2723;
+  --mocha: #8D6E63;
+  --terracotta: #D7CCC8;
+}
+
+@layer base {
+  body {
+    @apply bg-cream text-coffee font-sans overflow-x-hidden selection:bg-terracotta selection:text-coffee;
+  }
+  h1, h2, .serif {
+    @apply font-serif italic;
+  }
+}
+
+/* Clases de utilidad personalizadas (Originales) */
+.glass {
+  @apply backdrop-blur-xl bg-white/40 border border-white/30 shadow-2xl;
+}
+
+.scrolly-container {
+  scroll-snap-type: y mandatory;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.scrolly-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  height: 100vh;
+  @apply relative flex items-center justify-center overflow-hidden;
+}
+
+.map-grid {
+  background-image: radial-gradient(var(--terracotta) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* Animaciones */
+.typing-bubble {
+  animation: fadeInScale 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.9) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.waveform-bar {
+  @apply w-1 bg-mocha rounded-full;
+  height: 10px;
+}
+
+.vinyl-rotate {
+  animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--mocha);
+  border-radius: 10px;
+}
+
+/* Utilidad para ocultar scrollbar en carrusel */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

@@ -1,0 +1,125 @@
+---
+
+---
+
+<section class="scrolly-section bg-cream relative overflow-hidden">
+    <div class="absolute inset-0 z-0 opacity-20">
+        <img
+            alt="Fondo romántico"
+            class="w-full h-full object-cover blur-sm"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7H-8QLGouU1XM9CKSjCrWijrELImf26-LTwlQIM2DOF6p1hFIJ9CdSKd3CxANH93clpCboro8LhmnqPFy11GzziMvjSrBAPkGcvvfnDNYAoHKuxYx6wYqVT6m83MrsZR-2nG5WR5R2YPTTkvwwx32GUsmbLBDXHxPPOTN4-4wC1JgQ5LIa63Cw2GAaiH6NkReSzt3jHO7KesCAp01eIaeUPs6dVNsYmwKtlMJMaLsL5fTR6ev24WLuLjffPAXmblvL4c6sTa8hOY"
+        />
+    </div>
+
+    <div class="relative z-10 text-center px-4 w-full">
+        <p
+            class="text-mocha font-bold tracking-[0.3em] uppercase mb-10 text-sm md:text-base animate-pulse"
+        >
+            Desde aquel 28 de Marzo...
+        </p>
+
+        <div
+            class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-4xl mx-auto"
+        >
+            <div
+                class="flex flex-col items-center p-4 bg-white/30 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg"
+            >
+                <span
+                    id="days"
+                    class="serif text-5xl md:text-7xl font-black mb-2 text-coffee"
+                    >000</span
+                >
+                <span
+                    class="text-xs md:text-sm tracking-widest uppercase text-mocha font-bold"
+                    >Días</span
+                >
+            </div>
+
+            <div
+                class="flex flex-col items-center p-4 bg-white/30 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg"
+            >
+                <span
+                    id="hours"
+                    class="serif text-5xl md:text-7xl font-black mb-2 text-coffee"
+                    >00</span
+                >
+                <span
+                    class="text-xs md:text-sm tracking-widest uppercase text-mocha font-bold"
+                    >Horas</span
+                >
+            </div>
+
+            <div
+                class="flex flex-col items-center p-4 bg-white/30 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg"
+            >
+                <span
+                    id="minutes"
+                    class="serif text-5xl md:text-7xl font-black mb-2 text-coffee"
+                    >00</span
+                >
+                <span
+                    class="text-xs md:text-sm tracking-widest uppercase text-mocha font-bold"
+                    >Minutos</span
+                >
+            </div>
+
+            <div
+                class="flex flex-col items-center p-4 bg-white/30 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg transform scale-105"
+            >
+                <span
+                    id="seconds"
+                    class="serif text-5xl md:text-7xl font-black mb-2 text-terracotta"
+                    >00</span
+                >
+                <span
+                    class="text-xs md:text-sm tracking-widest uppercase text-mocha font-bold"
+                    >Segundos</span
+                >
+            </div>
+        </div>
+
+        <div class="mt-16 animate-bounce opacity-60">
+            <span class="material-symbols-outlined text-4xl text-coffee"
+                >expand_more</span
+            >
+        </div>
+    </div>
+</section>
+
+<script>
+    // Configuración de la fecha: 28 de Marzo de 2025 a las 10:00:00 AM
+    const startDate = new Date("2025-03-28T10:00:00");
+
+    function updateCounter() {
+        const now = new Date();
+        const diff = now.getTime() - startDate.getTime();
+
+        // Si la fecha es futura (por si acaso), mostramos 0
+        if (diff < 0) return;
+
+        // Cálculos matemáticos
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+            (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        );
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        // Actualizar el HTML
+        const dayEl = document.getElementById("days");
+        const hourEl = document.getElementById("hours");
+        const minEl = document.getElementById("minutes");
+        const secEl = document.getElementById("seconds");
+
+        if (dayEl) dayEl.innerText = days.toString().padStart(2, "0");
+        if (hourEl) hourEl.innerText = hours.toString().padStart(2, "0");
+        if (minEl) minEl.innerText = minutes.toString().padStart(2, "0");
+        if (secEl) secEl.innerText = seconds.toString().padStart(2, "0");
+    }
+
+    // Actualizar cada segundo
+    setInterval(updateCounter, 1000);
+
+    // Ejecutar inmediatamente al cargar
+    updateCounter();
+</script>

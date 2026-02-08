@@ -1,0 +1,211 @@
+---
+
+---
+
+<style>
+    /* Efecto Sepia para el mapa (estilo vintage) */
+    .sepia-map {
+        filter: sepia(0.3) contrast(1.1) brightness(0.95);
+        transition: filter 0.5s ease;
+    }
+    .sepia-map:hover {
+        filter: sepia(0) contrast(1) brightness(1);
+    }
+
+    /* Efecto Vidrio (Glassmorphism) */
+    .glass {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    /* Animación Radar (Ondas del pin) */
+    @keyframes radar {
+        0% {
+            transform: scale(1);
+            opacity: 0.8;
+        }
+        100% {
+            transform: scale(3);
+            opacity: 0;
+        }
+    }
+    .animate-radar {
+        animation: radar 2s infinite;
+    }
+</style>
+
+<section
+    class="scrolly-section bg-cream relative overflow-hidden !h-auto md:!h-screen py-24 md:py-0"
+>
+    <div
+        class="absolute -top-10 -right-10 w-64 h-64 bg-terracotta/20 rounded-full blur-3xl pointer-events-none"
+    >
+    </div>
+    <div
+        class="absolute -bottom-10 -left-10 w-72 h-72 bg-coffee/5 rounded-full blur-3xl pointer-events-none"
+    >
+    </div>
+
+    <div
+        class="max-w-7xl w-full mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10"
+    >
+        <div
+            class="space-y-6 md:space-y-8 order-2 lg:order-1 text-center lg:text-left"
+        >
+            <div class="space-y-2">
+                <span
+                    class="text-terracotta tracking-widest uppercase text-xs md:text-sm font-bold"
+                    >Capítulo Uno</span
+                >
+                <h2
+                    class="text-5xl lg:text-7xl font-serif font-bold text-coffee leading-tight"
+                >
+                    Donde la música <br />
+                    <span class="italic font-normal text-mocha">nos unió</span>
+                </h2>
+            </div>
+
+            <div
+                class="w-24 h-1 bg-terracotta mx-auto lg:mx-0 rounded-full opacity-80"
+            >
+            </div>
+
+            <p
+                class="text-xl lg:text-2xl font-light text-mocha leading-relaxed max-w-lg mx-auto lg:mx-0"
+            >
+                "Waiting for the band, I found you."
+            </p>
+
+            <p
+                class="text-base text-coffee/80 max-w-md mx-auto lg:mx-0 leading-loose"
+            >
+                Fue un día inesperado. El vuelo se retrasó, la música sonaba a
+                lo lejos y, entre la multitud y el caos del aeropuerto, nuestras
+                miradas coincidieron por primera vez. No fue el destino quien
+                nos trajo aquí, fue una melodía.
+            </p>
+
+            <div class="pt-4 flex justify-center lg:justify-start">
+                <div
+                    class="px-8 py-3 bg-coffee text-cream rounded-full shadow-lg flex items-center gap-2 transform hover:scale-105 transition-transform"
+                >
+                    <span class="font-bold">28 de Marzo, 2025</span>
+                    <span class="material-symbols-outlined text-sm"
+                        >calendar_today</span
+                    >
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="order-1 lg:order-2 flex justify-center lg:justify-end relative py-4 lg:py-0 mb-8 lg:mb-0"
+        >
+            <div
+                class="relative w-72 md:w-full md:max-w-md aspect-[3/4] md:aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] shadow-2xl overflow-hidden transform rotate-[-2deg] hover:rotate-0 transition-transform duration-700 bg-white border-4 border-white group"
+            >
+                <div class="absolute inset-0 w-full h-full">
+                    <img
+                        src="/mapa_aeropuerto.jpg"
+                        alt="Mapa Aeropuerto"
+                        class="w-full h-full object-cover sepia-map"
+                    />
+
+                    <div
+                        class="absolute inset-0 opacity-10 pointer-events-none"
+                        style="background-image: linear-gradient(#3E2723 1px, transparent 1px), linear-gradient(90deg, #3E2723 1px, transparent 1px); background-size: 40px 40px;"
+                    >
+                    </div>
+                </div>
+
+                <div
+                    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center"
+                >
+                    <div
+                        class="absolute w-3 h-3 md:w-4 md:h-4 bg-red-600 rounded-full"
+                    >
+                    </div>
+                    <div
+                        class="absolute w-3 h-3 md:w-4 md:h-4 bg-red-600 rounded-full animate-radar opacity-75"
+                    >
+                    </div>
+                    <div
+                        class="absolute w-3 h-3 md:w-4 md:h-4 bg-red-600 rounded-full animate-radar opacity-50"
+                        style="animation-delay: 0.5s;"
+                    >
+                    </div>
+                    <div
+                        class="relative z-10 text-red-600 drop-shadow-md transform -translate-y-4 md:-translate-y-6"
+                    >
+                        <span
+                            class="material-symbols-outlined text-5xl md:text-6xl fill-1"
+                            >location_on</span
+                        >
+                    </div>
+                </div>
+
+                <div
+                    class="absolute top-4 right-4 md:top-6 md:right-6 flex flex-col gap-2 md:gap-3"
+                >
+                    <div
+                        class="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur rounded-full shadow-md flex items-center justify-center text-coffee"
+                    >
+                        <span
+                            class="material-symbols-outlined text-xs md:text-sm"
+                            >layers</span
+                        >
+                    </div>
+                    <div
+                        class="w-8 h-8 md:w-10 md:h-10 bg-white/90 backdrop-blur rounded-full shadow-md flex items-center justify-center text-coffee"
+                    >
+                        <span
+                            class="material-symbols-outlined text-xs md:text-sm"
+                            >my_location</span
+                        >
+                    </div>
+                </div>
+
+                <div
+                    class="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 glass rounded-xl md:rounded-2xl p-3 md:p-4 flex items-center gap-3 md:gap-4 shadow-lg transition-all hover:bg-white/95"
+                >
+                    <div
+                        class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-tr from-coffee to-mocha flex items-center justify-center flex-shrink-0 shadow-inner"
+                    >
+                        <span
+                            class="material-symbols-outlined text-white text-lg md:text-xl"
+                            >flight_takeoff</span
+                        >
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3
+                            class="text-coffee font-serif font-bold text-base md:text-lg truncate"
+                        >
+                            El Concierto
+                        </h3>
+                        <div
+                            class="flex items-center gap-1 text-mocha text-[10px] md:text-xs uppercase tracking-wide"
+                        >
+                            <span class="material-symbols-outlined text-[10px]"
+                                >music_note</span
+                            >
+                            <span class="truncate"
+                                >Aeropuerto Int. de Mérida</span
+                            >
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div
+                            class="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white flex items-center justify-center text-red-500 shadow-sm"
+                        >
+                            <span
+                                class="material-symbols-outlined text-xs md:text-sm fill-1"
+                                >favorite</span
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
