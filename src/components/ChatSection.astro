@@ -1,47 +1,68 @@
 ---
 ---
 <style>
-    /* Contenedor de perspectiva */
+    /* --- ESTILOS BASE --- */
     .phone-3d-wrap {
         perspective: 1000px;
     }
     
-    /* El teléfono moviéndose */
     .phone-3d {
+        /* ESTADO INICIAL: Inclinado */
         transform: rotateX(12deg) rotateY(-12deg);
-        transition: transform 0.1s ease-out;
+        transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Transición suave */
         transform-style: preserve-3d;
         box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
     }
     
-    .phone-3d:hover {
-        transform: rotateX(0deg) rotateY(0deg) scale(1.02);
+    /* CLASE ACTIVA: Cuando el usuario hace scroll y llega aquí, se endereza */
+    .phone-3d.is-centered {
+        transform: rotateX(0deg) rotateY(0deg) scale(1);
     }
 
-    /* Patrón de fondo sutil */
     .chat-pattern {
         background-color: #000000;
         background-image: radial-gradient(#222 1px, transparent 1px);
         background-size: 20px 20px;
     }
+
+    /* --- ANIMACIÓN DE MENSAJES (REINICIABLE) --- */
+    
+    /* 1. Estado inicial: Ocultos y desplazados */
+    .typing-bubble {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+        transition: none; /* Sin transición al resetear */
+    }
+
+    /* 2. Cuando la sección tiene la clase "replay-chat", se animan */
+    .replay-chat .typing-bubble {
+        animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes popIn {
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
 </style>
 
-<section class="scrolly-section bg-terracotta/20 overflow-hidden !h-auto md:!h-screen py-20 md:py-0">
+<section id="chat-trigger" class="scrolly-section bg-terracotta/20 overflow-hidden !h-auto md:!h-screen py-20 md:py-0">
     <div class="max-w-7xl w-full mx-auto px-6 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
         
         <div class="w-full lg:w-1/2 space-y-8 z-10 text-center lg:text-left order-1">
             <div class="space-y-4">
                 <span class="uppercase tracking-widest text-xs font-bold opacity-50 text-mocha">Capítulo II</span>
-                <h2 class="text-5xl md:text-6xl font-bold italic text-coffee">El Chispazo</h2>
+                <h2 class="text-5xl md:text-6xl font-bold italic text-coffee">El Mensaje</h2>
                 <div class="w-20 h-1 bg-coffee mx-auto lg:mx-0"></div>
             </div>
             <p class="text-xl leading-relaxed font-light text-mocha italic opacity-90 max-w-md mx-auto lg:mx-0">
-                "Todo empezó con una historia y una pregunta... No sabía que al responderte, estaba conociendo al amor de mi vida."
+                "Todo empezó con una historia y una pregunta... No sabía que al responderte, mi vida iba a cambiar de una forma muy linda."
             </p>
             
             <div class="pt-8 flex items-center justify-center lg:justify-start gap-6">
                 <div class="w-12 h-12 rounded-full overflow-hidden border border-coffee">
-                    <img alt="Jenn" class="w-full h-full object-cover" src="/jenn.jpg"/>
+                    <img alt="Jenn" class="w-full h-full object-cover" src="/JennProfile.png"/>
                 </div>
                 <div class="text-left">
                     <p class="font-bold text-sm uppercase text-coffee">Jenn Sánchez</p>
@@ -52,7 +73,7 @@
 
         <div class="w-full lg:w-1/2 phone-3d-wrap flex justify-center py-4 lg:py-10 order-2 mb-10 lg:mb-0">
             
-            <div class="phone-3d w-64 md:w-80 h-[500px] md:h-[650px] rounded-[2.5rem] md:rounded-[3rem] border-4 border-neutral-600 bg-neutral-800 relative overflow-hidden flex flex-col">
+            <div id="mobile-phone" class="phone-3d w-64 md:w-80 h-[500px] md:h-[650px] rounded-[2.5rem] md:rounded-[3rem] border-4 border-neutral-600 bg-neutral-800 relative overflow-hidden flex flex-col">
                 
                 <div class="absolute inset-1 bg-black rounded-[2.3rem] md:rounded-[2.8rem] z-0 pointer-events-none border-[6px] border-black"></div>
 
@@ -61,7 +82,7 @@
                     <div class="p-4 pt-6 md:pt-8 border-b border-white/10 flex items-center gap-3 bg-zinc-900/90 backdrop-blur-md sticky top-0 z-20">
                         <div class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 p-[2px]">
                             <div class="w-full h-full rounded-full bg-black overflow-hidden">
-                                <img alt="Jenn" class="w-full h-full object-cover" src="/jenn.jpg"/>
+                                <img alt="Jenn" class="w-full h-full object-cover" src="/JennProfile.png"/>
                             </div>
                         </div>
                         <div>
@@ -74,13 +95,13 @@
                         </div>
                     </div>
 
-                    <div class="flex-1 p-3 md:p-4 space-y-4 md:space-y-6 overflow-y-auto chat-pattern relative">
+                    <div id="chat-content" class="flex-1 p-3 md:p-4 space-y-4 md:space-y-6 overflow-y-auto chat-pattern relative">
                         
                         <div class="text-center text-[9px] text-zinc-500 font-medium my-4">13 ABR, 5:47 P.M.</div>
 
                         <div class="flex items-end gap-2 typing-bubble" style="animation-delay: 0.5s;">
                             <div class="w-5 h-5 md:w-6 md:h-6 rounded-full overflow-hidden flex-shrink-0">
-                                <img src="/jenn.jpg" class="w-full h-full object-cover">
+                                <img src="/JennProfile.png" class="w-full h-full object-cover">
                             </div>
                             <div class="bg-zinc-800 rounded-2xl rounded-bl-sm p-2 md:p-3 text-[12px] md:text-[14px] text-white max-w-[85%] shadow-sm leading-tight">
                                 Mi vidaaa, ¿es tuyo?
@@ -93,9 +114,9 @@
                             </div>
                         </div>
 
-                        <div class="flex items-end gap-2 typing-bubble relative" style="animation-delay: 4s;">
+                        <div class="flex items-end gap-2 typing-bubble relative" style="animation-delay: 3.5s;">
                             <div class="w-5 h-5 md:w-6 md:h-6 rounded-full overflow-hidden flex-shrink-0">
-                                <img src="/jenn.jpg" class="w-full h-full object-cover">
+                                <img src="/JennProfile.png" class="w-full h-full object-cover">
                             </div>
                             <div class="relative">
                                 <div class="bg-zinc-800 rounded-2xl rounded-bl-sm p-2 md:p-3 text-[12px] md:text-[14px] text-white max-w-[100%] shadow-sm leading-tight">
@@ -107,7 +128,7 @@
                             </div>
                         </div>
 
-                        <div class="flex justify-center my-4 typing-bubble" style="animation-delay: 6s;">
+                        <div class="flex justify-center my-4 typing-bubble" style="animation-delay: 5s;">
                             <span class="text-[9px] text-zinc-500">Reaccionó a tu historia</span>
                         </div>
 
@@ -133,3 +154,35 @@
         </div>
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Obtenemos los elementos
+        const section = document.getElementById('chat-trigger');
+        const phone = document.getElementById('mobile-phone');
+        const chatContent = document.getElementById('chat-content');
+
+        // VERIFICACIÓN DE SEGURIDAD (Esto arregla el error)
+        // Solo ejecutamos el código si los 3 elementos existen realmente
+        if (section && phone && chatContent) {
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // 1. SI LA SECCIÓN ES VISIBLE:
+                        phone.classList.add('is-centered');
+                        chatContent.classList.add('replay-chat');
+                    } else {
+                        // 2. SI TE SALES DE LA SECCIÓN:
+                        phone.classList.remove('is-centered');
+                        chatContent.classList.remove('replay-chat');
+                    }
+                });
+            }, {
+                threshold: 0.5 
+            });
+
+            observer.observe(section);
+        }
+    });
+</script>

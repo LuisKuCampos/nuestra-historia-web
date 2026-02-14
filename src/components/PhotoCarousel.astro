@@ -1,0 +1,103 @@
+    ---
+// PhotoCarousel.astro
+// Aquí pon las fotos de ustedes (puedes poner más o menos, el carrusel se ajusta)
+const photos = [
+    "/carrusel/1.jpg",
+    "/carrusel/2.jpg",
+    "/carrusel/3.png",
+    "/carrusel/4.jpeg",
+    "/carrusel/5.jpeg",
+    "/carrusel/6.jpeg",
+];
+
+const quantity = photos.length;
+---
+
+<style>
+    .wrapper {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        /* Un poco de perspectiva para que se vea 3D */
+        perspective: 1000px; 
+    }
+
+    .inner {
+        --w: 120px;  /* Ancho de la foto */
+        --h: 160px;  /* Alto de la foto */
+        /* Cálculo automático del radio del círculo según la cantidad de fotos */
+        --translateZ: calc((var(--w) + var(--h)) + 20px); 
+        --rotateX: -10deg; /* Inclinación suave */
+        
+        position: relative;
+        width: var(--w);
+        height: var(--h);
+        z-index: 2;
+        transform-style: preserve-3d;
+        /* La animación que hace girar todo */
+        animation: rotating 20s linear infinite; 
+    }
+
+    /* Al pasar el mouse, que gire más lento para ver las fotos */
+    .wrapper:hover .inner {
+        animation-play-state: running; /* Sigue girando */
+        animation-duration: 40s; /* O 'running' con duration más larga */
+    }
+
+    @keyframes rotating {
+        from {
+            transform: rotateX(var(--rotateX)) rotateY(0deg);
+        }
+        to {
+            transform: rotateX(var(--rotateX)) rotateY(360deg);
+        }
+    }
+
+    .card {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        /* Borde blanco tipo foto impresa */
+        border: 4px solid white; 
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        background-color: white;
+        
+        /* Matemáticas para ubicar cada tarjeta en círculo */
+        inset: 0;
+        transform: rotateY(calc((360deg / var(--quantity)) * var(--index))) translateZ(var(--translateZ));
+    }
+
+    .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Esto hace que la imagen no se deforme */
+        display: block;
+        pointer-events: none; /* Para que no arrastren la imagen */
+    }
+</style>
+
+<section class="scrolly-section bg-cream py-20 overflow-hidden h-[600px]">
+    
+    <div class="text-center mb-10 z-10 relative">
+        <h2 class="font-serif text-4xl text-coffee italic">Nuestros Recuerdos</h2>
+    </div>
+
+    <div class="wrapper">
+        <div class="inner" style={`--quantity: ${quantity};`}>
+            
+            {photos.map((photo, index) => (
+                <div class="card" style={`--index: ${index};`}>
+                    <img src={photo} alt={`Foto recuerdo ${index + 1}`} loading="lazy" />
+                </div>
+            ))}
+            
+        </div>
+    </div>
+</section>
